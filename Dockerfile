@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
     mariadb-client \
     && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
 
-# Install Node.js (for Vite)
+# Install Node.js (for Vite build)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
@@ -26,18 +26,22 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www
 
-# Copy application code
+# Copy only composer files first for better Docker layer caching
+COPY composer.json composer.lock ./
+
+# Install PHP dependencies
+RUN composer install --optimize-autoloader --no-dev
+
+# Copy the full application source
 COPY . .
 
-# Install PHP and JS dependencies
-RUN composer install --optimize-autoloader --no-dev && \
-    npm install && \
-    npm run build
+# Install JS dependencies and build assets
+RUN npm install && npm run build
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www/storage
+# Set file permissions
+RUN chown -R www-data:www-data /var/www && chmod -R 755 /var/www/storage /var/www/bootstrap/cache
 
-# Expose the port Laravel will run on
+# Expose Laravel port
 EXPOSE 8000
 
 # Start Laravel
