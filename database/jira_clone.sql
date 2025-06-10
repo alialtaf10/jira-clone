@@ -15,14 +15,16 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 -- Dumping structure for table jira_clone.activity_logs
+
+use sql12783606;
 CREATE TABLE IF NOT EXISTS `activity_logs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `log_name` varchar(255) DEFAULT NULL,
+  `log_name` VARCHAR(191) DEFAULT NULL,
   `description` text NOT NULL,
   `causer_id` bigint(20) unsigned DEFAULT NULL,
-  `subject_type` varchar(255) NOT NULL,
+  `subject_type` VARCHAR(191) NOT NULL,
   `subject_id` bigint(20) unsigned NOT NULL,
-  `properties` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`properties`)),
+  `properties` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_by` bigint(20) unsigned NOT NULL,
@@ -42,12 +44,12 @@ CREATE TABLE IF NOT EXISTS `activity_logs` (
 -- Dumping structure for table jira_clone.attachments
 CREATE TABLE IF NOT EXISTS `attachments` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `path` varchar(255) NOT NULL,
-  `mime_type` varchar(255) NOT NULL,
+  `name` VARCHAR(191) NOT NULL,
+  `path` VARCHAR(191) NOT NULL,
+  `mime_type` VARCHAR(191) NOT NULL,
   `size` int(11) NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
-  `attachable_type` varchar(255) NOT NULL,
+  `attachable_type` VARCHAR(191) NOT NULL,
   `attachable_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -67,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `attachments` (
 
 -- Dumping structure for table jira_clone.cache
 CREATE TABLE IF NOT EXISTS `cache` (
-  `key` varchar(255) NOT NULL,
+  `key` VARCHAR(191) NOT NULL,
   `value` mediumtext NOT NULL,
   `expiration` int(11) NOT NULL,
   PRIMARY KEY (`key`)
@@ -77,8 +79,8 @@ CREATE TABLE IF NOT EXISTS `cache` (
 
 -- Dumping structure for table jira_clone.cache_locks
 CREATE TABLE IF NOT EXISTS `cache_locks` (
-  `key` varchar(255) NOT NULL,
-  `owner` varchar(255) NOT NULL,
+  `key` VARCHAR(191) NOT NULL,
+  `owner` VARCHAR(191) NOT NULL,
   `expiration` int(11) NOT NULL,
   PRIMARY KEY (`key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -90,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `content` text NOT NULL,
   `user_id` bigint(20) unsigned NOT NULL,
-  `commentable_type` varchar(255) NOT NULL,
+  `commentable_type` VARCHAR(191) NOT NULL,
   `commentable_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -111,11 +113,11 @@ CREATE TABLE IF NOT EXISTS `comments` (
 -- Dumping structure for table jira_clone.epics
 CREATE TABLE IF NOT EXISTS `epics` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
+  `title` VARCHAR(191) NOT NULL,
   `description` text DEFAULT NULL,
   `project_id` bigint(20) unsigned NOT NULL,
   `created_by` bigint(20) unsigned NOT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'open',
+  `status` VARCHAR(191) NOT NULL DEFAULT 'open',
   `priority` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -134,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `epics` (
 -- Dumping structure for table jira_clone.failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) NOT NULL,
+  `uuid` VARCHAR(191) NOT NULL,
   `connection` text NOT NULL,
   `queue` text NOT NULL,
   `payload` longtext NOT NULL,
@@ -149,11 +151,11 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 -- Dumping structure for table jira_clone.features
 CREATE TABLE IF NOT EXISTS `features` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
+  `title` VARCHAR(191) NOT NULL,
   `description` text DEFAULT NULL,
   `epic_id` bigint(20) unsigned NOT NULL,
   `assigned_to` bigint(20) unsigned DEFAULT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'backlog',
+  `status` VARCHAR(191) NOT NULL DEFAULT 'backlog',
   `priority` int(11) NOT NULL DEFAULT 0,
   `story_points` int(11) DEFAULT NULL,
   `due_date` date DEFAULT NULL,
@@ -177,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `features` (
 -- Dumping structure for table jira_clone.jobs
 CREATE TABLE IF NOT EXISTS `jobs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `queue` varchar(255) NOT NULL,
+  `queue` VARCHAR(191) NOT NULL,
   `payload` longtext NOT NULL,
   `attempts` tinyint(3) unsigned NOT NULL,
   `reserved_at` int(10) unsigned DEFAULT NULL,
@@ -191,8 +193,8 @@ CREATE TABLE IF NOT EXISTS `jobs` (
 
 -- Dumping structure for table jira_clone.job_batches
 CREATE TABLE IF NOT EXISTS `job_batches` (
-  `id` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
+  `id` VARCHAR(191) NOT NULL,
+  `name` VARCHAR(191) NOT NULL,
   `total_jobs` int(11) NOT NULL,
   `pending_jobs` int(11) NOT NULL,
   `failed_jobs` int(11) NOT NULL,
@@ -209,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `job_batches` (
 -- Dumping structure for table jira_clone.migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) NOT NULL,
+  `migration` VARCHAR(191) NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -233,8 +235,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 -- Dumping structure for table jira_clone.password_reset_tokens
 CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` VARCHAR(191) NOT NULL,
+  `token` VARCHAR(191) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -244,12 +246,12 @@ CREATE TABLE IF NOT EXISTS `password_reset_tokens` (
 -- Dumping structure for table jira_clone.projects
 CREATE TABLE IF NOT EXISTS `projects` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `name` VARCHAR(191) NOT NULL,
   `description` text DEFAULT NULL,
   `product_owner_id` bigint(20) unsigned NOT NULL,
   `start_date` date DEFAULT NULL,
   `end_date` date DEFAULT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'planning',
+  `status` VARCHAR(191) NOT NULL DEFAULT 'planning',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_by` bigint(20) unsigned NOT NULL,
@@ -290,8 +292,8 @@ CREATE TABLE IF NOT EXISTS `project_team` (
 -- Dumping structure for table jira_clone.roles
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `description` varchar(255) DEFAULT NULL,
+  `name` VARCHAR(191) NOT NULL,
+  `description` VARCHAR(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `created_by` bigint(20) unsigned NOT NULL,
@@ -308,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 
 -- Dumping structure for table jira_clone.sessions
 CREATE TABLE IF NOT EXISTS `sessions` (
-  `id` varchar(255) NOT NULL,
+  `id` VARCHAR(191) NOT NULL,
   `user_id` bigint(20) unsigned DEFAULT NULL,
   `ip_address` varchar(45) DEFAULT NULL,
   `user_agent` text DEFAULT NULL,
@@ -324,11 +326,11 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 -- Dumping structure for table jira_clone.tasks
 CREATE TABLE IF NOT EXISTS `tasks` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
+  `title` VARCHAR(191) NOT NULL,
   `description` text DEFAULT NULL,
   `feature_id` bigint(20) unsigned NOT NULL,
   `assigned_to` bigint(20) unsigned DEFAULT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'todo',
+  `status` VARCHAR(191) NOT NULL DEFAULT 'todo',
   `priority` int(11) NOT NULL DEFAULT 0,
   `estimated_hours` int(11) DEFAULT NULL,
   `actual_hours` int(11) DEFAULT NULL,
@@ -354,7 +356,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 -- Dumping structure for table jira_clone.teams
 CREATE TABLE IF NOT EXISTS `teams` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `name` VARCHAR(191) NOT NULL,
   `description` text DEFAULT NULL,
   `team_lead_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -397,14 +399,14 @@ CREATE TABLE IF NOT EXISTS `team_user` (
 -- Dumping structure for table jira_clone.users
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
+  `name` VARCHAR(191) NOT NULL,
+  `email` VARCHAR(191) NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` VARCHAR(191) NOT NULL,
   `remember_token` varchar(100) DEFAULT NULL,
   `role_id` bigint(20) unsigned NOT NULL,
-  `job_title` varchar(255) DEFAULT NULL,
-  `avatar` varchar(255) DEFAULT NULL,
+  `job_title` VARCHAR(191) DEFAULT NULL,
+  `avatar` VARCHAR(191) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
